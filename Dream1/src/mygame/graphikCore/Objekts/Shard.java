@@ -28,8 +28,8 @@ public class Shard extends Node {
     HashMap<Shardenum, Shard> outer;
     Shardmesh shardbox;
     float size;
-    private RigidBodyControl landscape;
-    private RigidBodyControl landscape2;
+    private RigidBodyControl collide;
+    private RigidBodyControl collide2;
 
     public Shard(AssetManager assetManager, BulletAppState bulletAppState, float size, float height) {
         this.setName("shardNumber#");
@@ -67,23 +67,23 @@ public class Shard extends Node {
     }
 
     public void initPhysic() {
-        landscape = new RigidBodyControl(0.0f);
+        collide = new RigidBodyControl(0.0f);
         
 
-        this.addControl(landscape);
-        landscape.setKinematic(false);
-        bulletAppState.getPhysicsSpace().add(landscape);
-        landscape.setGravity(new Vector3f(0, -9.81f, 0));
+        this.addControl(collide);
+        collide.setKinematic(false);
+        bulletAppState.getPhysicsSpace().add(collide);
+        collide.setGravity(new Vector3f(0, -9.81f, 0));
         this.getControl(RigidBodyControl.class).setPhysicsLocation(this.getLocalTranslation());
     }
 
     public void updatePhysic() {
-        this.removeControl(landscape);
-        bulletAppState.getPhysicsSpace().remove(landscape);
-        landscape = new RigidBodyControl(0.0f);
+        this.removeControl(collide);
+        bulletAppState.getPhysicsSpace().remove(collide);
+        collide = new RigidBodyControl(0.0f);
 
-        this.addControl(landscape);
-        bulletAppState.getPhysicsSpace().add(landscape);
+        this.addControl(collide);
+        bulletAppState.getPhysicsSpace().add(collide);
         this.getControl(RigidBodyControl.class).setPhysicsLocation(this.getLocalTranslation());
 
     }

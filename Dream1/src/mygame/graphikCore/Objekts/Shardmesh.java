@@ -194,6 +194,9 @@ public class Shardmesh extends Mesh {
 
     }
 
+    public Vector3f[] getVertices(){
+        return vertices;
+    }
     public void setLeftDown(float height) {
         vertices[1].setY(height);
         vertices[5].setY(height);

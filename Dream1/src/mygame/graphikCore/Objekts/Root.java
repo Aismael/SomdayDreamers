@@ -16,6 +16,7 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.VertexBuffer;
+import com.jme3.scene.shape.Box;
 import com.jme3.util.TangentBinormalGenerator;
 import mygame.graphikCore.GTAPObject;
 import mygame.graphikCore.GTAPObjectFactory;
@@ -87,7 +88,7 @@ public class Root extends Node {
         
         
         
-        Shardmesh shardbox= new Shardmesh(1f,1f,1f);
+        Box shardbox= new Box(1f,1f,1f);
         Geometry shardboxg = new Geometry("Shardbox", shardbox);
         shardboxg.setLocalTranslation(new Vector3f(1, 0.5f, 1));
         Material mat = new Material(assetManager,
