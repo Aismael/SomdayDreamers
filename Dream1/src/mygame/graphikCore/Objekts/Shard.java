@@ -6,7 +6,9 @@ package mygame.graphikCore.Objekts;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.collision.shapes.SimplexCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -29,14 +31,17 @@ public class Shard extends Node {
     Shardmesh shardbox;
     float size;
     private RigidBodyControl collide;
-    private RigidBodyControl collide2;
+    float factor;
+    private final float height;
 
     public Shard(AssetManager assetManager, BulletAppState bulletAppState, float size, float height) {
+        factor=3;
         this.setName("shardNumber#");
         outer = new HashMap<>(4);
         this.assetManager = assetManager;
         this.bulletAppState = bulletAppState;
         this.size = size;
+        this.height=height;
         shardbox = new Shardmesh(size, height, size);
         Geometry shardboxg = new Geometry("Shardbox", shardbox);
         shardboxg.setLocalTranslation(new Vector3f(0, -1, 0));
@@ -63,13 +68,15 @@ public class Shard extends Node {
         TangentBinormalGenerator.generate(shardboxg);
         shardboxg.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         this.attachChild(shardboxg);
+        this.initPhysic();
 
     }
 
     public void initPhysic() {
+        //
+       
         collide = new RigidBodyControl(0.0f);
-        
-
+        collide.setCollisionShape(CollisionShapeFactory.createMeshShape(this));
         this.addControl(collide);
         collide.setKinematic(false);
         bulletAppState.getPhysicsSpace().add(collide);
@@ -80,7 +87,9 @@ public class Shard extends Node {
     public void updatePhysic() {
         this.removeControl(collide);
         bulletAppState.getPhysicsSpace().remove(collide);
+       
         collide = new RigidBodyControl(0.0f);
+        collide.setCollisionShape(CollisionShapeFactory.createMeshShape(this));
 
         this.addControl(collide);
         bulletAppState.getPhysicsSpace().add(collide);
@@ -91,10 +100,10 @@ public class Shard extends Node {
     public void fizzle() {
         float fMax = this.getMiddle();
 
-        setLeftUp(((float) (fMax + randomGenerator() * size/3)));
-        setLeftDown((float) (fMax + randomGenerator() * size/3));
-        setRightUp((float) (fMax + randomGenerator() * size/3));
-        setRightDown((float) (fMax + randomGenerator() * size/3));
+        setLeftUp(((float) (fMax + randomGenerator() * size / factor)));
+        setLeftDown((float) (fMax + randomGenerator() * size / factor));
+        setRightUp((float) (fMax + randomGenerator() * size / factor));
+        setRightDown((float) (fMax + randomGenerator() * size / factor));
 
         reWork();
     }
@@ -103,16 +112,16 @@ public class Shard extends Node {
         float fMax = this.getMiddle();
         //float fMax = this.getMiddle();
         if (this.getWest() == null && this.getNorth() == null) {
-            setLeftUp((float) (fMax+randomGenerator()* size/3));
+            setLeftUp((float) (fMax + randomGenerator() * size / factor));
         }
-        if(this.getWest()==null&&this.getSouth()==null){
-        setLeftDown((float) (fMax+randomGenerator()* size/3));
+        if (this.getWest() == null && this.getSouth() == null) {
+            setLeftDown((float) (fMax + randomGenerator() * size / factor));
         }
-        if(this.getEast()==null&&this.getNorth()==null){
-        setRightUp((float) (fMax+randomGenerator()* size/3));
+        if (this.getEast() == null && this.getNorth() == null) {
+            setRightUp((float) (fMax + randomGenerator() * size / factor));
         }
-        if(this.getEast()==null&&this.getSouth()==null){
-        setRightDown((float) (fMax+randomGenerator()* size/3));
+        if (this.getEast() == null && this.getSouth() == null) {
+            setRightDown((float) (fMax + randomGenerator() * size / factor));
         }
         reWork();
     }
@@ -206,7 +215,6 @@ public class Shard extends Node {
             North.setLeftDown(this.getLeftUp());
             North.setRightDown(this.getRightUp());
             North.updateGeometricState();
-            North.updatePhysic();
         }
         if (North.getSouth() == null) {
             North.setSouth(this, false);
@@ -214,7 +222,9 @@ public class Shard extends Node {
         }
         North.fizzlein();
         North.updateGeometricState();
-        North.updatePhysic();
+        if (this.getNorth() != null && this.getSouth() != null && this.getEast() != null && this.getWest() != null) {
+            this.updatePhysic();
+        }
     }
 
     public void setSouth(Shard South, boolean fit) {
@@ -225,7 +235,6 @@ public class Shard extends Node {
             South.setLeftUp(this.getLeftDown());
             South.setRightUp(this.getRightDown());
             South.updateGeometricState();
-            South.updatePhysic();
         }
         if (South.getNorth() == null) {
             South.setNorth(this, false);
@@ -233,7 +242,10 @@ public class Shard extends Node {
         }
         South.fizzlein();
         South.updateGeometricState();
-        South.updatePhysic();
+        if (this.getNorth() != null && this.getSouth() != null && this.getEast() != null && this.getWest() != null) {
+            this.updatePhysic();
+
+        }
     }
 
     public void setEast(Shard East, boolean fit) {
@@ -245,9 +257,6 @@ public class Shard extends Node {
             East.setLeftUp(this.getRightUp());
             East.setLeftDown(this.getRightDown());
             East.updateGeometricState();
-            East.updatePhysic();
-
-
         }
         if (East.getWest() == null) {
             East.setWest(this, false);
@@ -255,7 +264,10 @@ public class Shard extends Node {
         }
         East.fizzlein();
         East.updateGeometricState();
-        East.updatePhysic();
+        if (this.getNorth() != null && this.getSouth() != null && this.getEast() != null && this.getWest() != null) {
+            this.updatePhysic();
+
+        }
     }
 
     public void setWest(Shard West, boolean fit) {
@@ -266,7 +278,6 @@ public class Shard extends Node {
             West.setRightUp(this.getLeftUp());
             West.setRightDown(this.getLeftDown());
             West.updateGeometricState();
-            West.updatePhysic();
         }
         if (West.getEast() == null) {
             West.setEast(this, false);
@@ -274,7 +285,10 @@ public class Shard extends Node {
         }
         West.fizzlein();
         West.updateGeometricState();
-        West.updatePhysic();
+        if (this.getNorth() != null && this.getSouth() != null && this.getEast() != null && this.getWest() != null) {
+            this.updatePhysic();
+
+        }
     }
 
     public Shard getNorth() {

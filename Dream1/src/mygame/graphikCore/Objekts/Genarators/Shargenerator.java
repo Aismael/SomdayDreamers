@@ -28,9 +28,9 @@ public class Shargenerator extends Node {
     boolean init=false;
 
     public Shargenerator(AssetManager assetManager, BulletAppState bulletAppState) {
-        shardsize = 2;
+        shardsize = 4;
         shardnullheight = 1;
-        shardload = 25;
+        shardload = 12;
         this.assetManager = assetManager;
         this.bulletAppState = bulletAppState;
         World = new HashMap<>(5);
@@ -77,7 +77,7 @@ public class Shargenerator extends Node {
 
     private Shard makeShard(int x, int z) {
         Shard s = new Shard(assetManager, bulletAppState, shardsize, shardnullheight);
-        s.setName(s.getName() + " x= " + x + " z= " + z);
+        s.setName("shardNumber#" + " x= " + x + " z= " + z);
         if(!this.hasChild(s)){
         this.attachChild(s);
 
@@ -85,7 +85,7 @@ public class Shargenerator extends Node {
 
         System.err.print("make" + " x= " + x + " z= " + z + "\n");
         s.fizzle();
-        s.initPhysic();
+        //s.initPhysic();
         
         return s;
         }else{
