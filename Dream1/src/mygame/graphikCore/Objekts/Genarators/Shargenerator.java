@@ -30,7 +30,7 @@ public class Shargenerator extends Node {
     public Shargenerator(AssetManager assetManager, BulletAppState bulletAppState) {
         shardsize = 4;
         shardnullheight = 1;
-        shardload = 12;
+        shardload = 24;
         this.assetManager = assetManager;
         this.bulletAppState = bulletAppState;
         World = new HashMap<>(5);

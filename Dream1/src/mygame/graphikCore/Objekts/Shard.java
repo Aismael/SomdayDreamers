@@ -17,6 +17,8 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.util.TangentBinormalGenerator;
 import java.util.HashMap;
+import mygame.graphikCore.GTAPObject;
+import mygame.graphikCore.GTAPObjectFactory;
 import mygame.graphikCore.Objekts.ShardContent.Shardenum;
 
 /**
@@ -35,13 +37,13 @@ public class Shard extends Node {
     private final float height;
 
     public Shard(AssetManager assetManager, BulletAppState bulletAppState, float size, float height) {
-        factor=3;
+        factor = 3;
         this.setName("shardNumber#");
         outer = new HashMap<>(4);
         this.assetManager = assetManager;
         this.bulletAppState = bulletAppState;
         this.size = size;
-        this.height=height;
+        this.height = height;
         shardbox = new Shardmesh(size, height, size);
         Geometry shardboxg = new Geometry("Shardbox", shardbox);
         shardboxg.setLocalTranslation(new Vector3f(0, -1, 0));
@@ -69,12 +71,15 @@ public class Shard extends Node {
         shardboxg.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         this.attachChild(shardboxg);
         this.initPhysic();
+        this.setCullHint(CullHint.Dynamic);
+        
+        
 
     }
 
     public void initPhysic() {
         //
-       
+
         collide = new RigidBodyControl(0.0f);
         collide.setCollisionShape(CollisionShapeFactory.createMeshShape(this));
         this.addControl(collide);
@@ -87,7 +92,7 @@ public class Shard extends Node {
     public void updatePhysic() {
         this.removeControl(collide);
         bulletAppState.getPhysicsSpace().remove(collide);
-       
+
         collide = new RigidBodyControl(0.0f);
         collide.setCollisionShape(CollisionShapeFactory.createMeshShape(this));
 
@@ -214,7 +219,6 @@ public class Shard extends Node {
             North.getControl(RigidBodyControl.class).setPhysicsLocation(North.getLocalTranslation());
             North.setLeftDown(this.getLeftUp());
             North.setRightDown(this.getRightUp());
-            North.updateGeometricState();
         }
         if (North.getSouth() == null) {
             North.setSouth(this, false);
@@ -223,7 +227,7 @@ public class Shard extends Node {
         North.fizzlein();
         North.updateGeometricState();
         if (this.getNorth() != null && this.getSouth() != null && this.getEast() != null && this.getWest() != null) {
-            this.updatePhysic();
+            this.endclean();
         }
     }
 
@@ -234,7 +238,6 @@ public class Shard extends Node {
             South.getControl(RigidBodyControl.class).setPhysicsLocation(South.getLocalTranslation());
             South.setLeftUp(this.getLeftDown());
             South.setRightUp(this.getRightDown());
-            South.updateGeometricState();
         }
         if (South.getNorth() == null) {
             South.setNorth(this, false);
@@ -243,7 +246,7 @@ public class Shard extends Node {
         South.fizzlein();
         South.updateGeometricState();
         if (this.getNorth() != null && this.getSouth() != null && this.getEast() != null && this.getWest() != null) {
-            this.updatePhysic();
+            this.endclean();
 
         }
     }
@@ -256,7 +259,6 @@ public class Shard extends Node {
 
             East.setLeftUp(this.getRightUp());
             East.setLeftDown(this.getRightDown());
-            East.updateGeometricState();
         }
         if (East.getWest() == null) {
             East.setWest(this, false);
@@ -265,7 +267,7 @@ public class Shard extends Node {
         East.fizzlein();
         East.updateGeometricState();
         if (this.getNorth() != null && this.getSouth() != null && this.getEast() != null && this.getWest() != null) {
-            this.updatePhysic();
+            this.endclean();
 
         }
     }
@@ -277,7 +279,6 @@ public class Shard extends Node {
             West.getControl(RigidBodyControl.class).setPhysicsLocation(West.getLocalTranslation());
             West.setRightUp(this.getLeftUp());
             West.setRightDown(this.getLeftDown());
-            West.updateGeometricState();
         }
         if (West.getEast() == null) {
             West.setEast(this, false);
@@ -286,7 +287,7 @@ public class Shard extends Node {
         West.fizzlein();
         West.updateGeometricState();
         if (this.getNorth() != null && this.getSouth() != null && this.getEast() != null && this.getWest() != null) {
-            this.updatePhysic();
+            this.endclean();
 
         }
     }
@@ -326,5 +327,33 @@ public class Shard extends Node {
             return null;
         }
 
+    }
+
+    public void endclean() {
+        this.getNorth().setLeftDown(this.getLeftUp());
+        this.getNorth().setRightDown(this.getRightUp());
+        this.getNorth().updatePhysic();
+        this.getSouth().setLeftUp(this.getLeftDown());
+        this.getSouth().setRightUp(this.getRightDown());
+        this.getSouth().updatePhysic();
+        this.getEast().setLeftUp(this.getRightUp());
+        this.getEast().setLeftDown(this.getRightDown());
+        this.getEast().updatePhysic();
+        this.getWest().setRightUp(this.getLeftUp());
+        this.getWest().setRightDown(this.getLeftDown());
+        this.getWest().updatePhysic();
+        this.updatePhysic();
+        
+        //testchild
+        //GTAPObjectFactory GF=new GTAPObjectFactory(assetManager, bulletAppState);
+        //GF.setScale(0.01f);
+        //GF.setShine(128f);
+        
+        //GF.setWeight(0f);
+        //GF.setTrans(this.getLocalTranslation().add(new Vector3f(0, this.getMiddle()-height, 0)));
+        //this.attachChild(GF.makeModel(new GTAPObject("Fullmodels/Boxes/Barrel/big_diffus.tga", 
+        //        "Fullmodels/Boxes/Barrel/big_normal.tga", 
+        //        "Fullmodels/Boxes/Barrel/big_specular.tga", 
+        //        "Fullmodels/Boxes/Barrel/big_wood_barrel.j3o")));
     }
 }

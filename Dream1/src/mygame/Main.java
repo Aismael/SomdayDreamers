@@ -98,12 +98,13 @@ public class Main extends SimpleApplication {
         final int SHADOWMAP_SIZE=1024;
         DirectionalLightShadowRenderer dlsr = new DirectionalLightShadowRenderer(assetManager, SHADOWMAP_SIZE, 3);
         dlsr.setLight(dl);
+        dlsr.setShadowZExtend(50f);
         viewPort.addProcessor(dlsr);
  
         DirectionalLightShadowFilter dlsf = new DirectionalLightShadowFilter(assetManager, SHADOWMAP_SIZE, 3);
         dlsf.setLight(dl);
         dlsf.setEnabled(true);
-        
+        dlsf.setShadowZExtend(50f);
         FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
         fpp.addFilter(dlsf);
         viewPort.addProcessor(fpp);
@@ -121,7 +122,7 @@ public class Main extends SimpleApplication {
         //fpp.addFilter(ct);
         //viewPort.addProcessor(fpp);
         
-        FogFilter ff = new FogFilter(ColorRGBA.Gray, 0.5f, 100f);
+        FogFilter ff = new FogFilter(ColorRGBA.Gray, 0.5f, 75f);
         fpp.addFilter(ff);
         viewPort.addProcessor(fpp);
         

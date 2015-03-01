@@ -41,6 +41,8 @@ public class GTAPObjectFactory {
         scale = 1;
         shine = 0f;
         weight = 0f;
+        trans=new Vector3f(0, 0, 0);
+        
     }
 
     private Material makeMat() {

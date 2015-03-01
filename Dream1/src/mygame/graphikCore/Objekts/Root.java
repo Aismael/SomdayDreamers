@@ -90,7 +90,7 @@ public class Root extends Node {
         
         Box shardbox= new Box(1f,1f,1f);
         Geometry shardboxg = new Geometry("Shardbox", shardbox);
-        shardboxg.setLocalTranslation(new Vector3f(0, -0.5f, 0));
+        shardboxg.setLocalTranslation(new Vector3f(0, 0.5f, 0));
         Material mat = new Material(assetManager,
           "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
         mat.setColor("Color", ColorRGBA.Blue);
