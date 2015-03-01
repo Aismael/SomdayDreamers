@@ -6,7 +6,6 @@ package mygame.graphikCore.Objekts;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.collision.shapes.SimplexCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -14,7 +13,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.shape.Box;
 import com.jme3.util.TangentBinormalGenerator;
 import java.util.HashMap;
 import mygame.graphikCore.Objekts.ShardContent.Shardenum;
@@ -49,9 +47,9 @@ public class Shard extends Node {
         Material sphereMat = new Material(this.assetManager,
                 "Common/MatDefs/Light/Lighting.j3md");
         sphereMat.setTexture("DiffuseMap",
-                this.assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));
+                this.assetManager.loadTexture("UTextures/Pondx128.tga"));
         sphereMat.setTexture("NormalMap",
-                this.assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));
+                this.assetManager.loadTexture("UTextures/Pond_normalx128.tga"));
         sphereMat.setBoolean("UseMaterialColors", true);
         sphereMat.setColor("Diffuse", ColorRGBA.White);
         sphereMat.setColor("Specular", ColorRGBA.White);
