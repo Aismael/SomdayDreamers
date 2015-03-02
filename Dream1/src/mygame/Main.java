@@ -7,16 +7,12 @@ import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
-import com.jme3.post.filters.CartoonEdgeFilter;
 import com.jme3.post.filters.FogFilter;
-import com.jme3.post.ssao.SSAOFilter;
-import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Node;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
-import com.jme3.shadow.PssmShadowRenderer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
@@ -41,14 +37,13 @@ public class Main extends SimpleApplication {
         app.setSettings(cI.getSettings());
         app.start();
     }
-    private BulletAppState bulletAppState;
-    private Shargenerator Sg;
-    private Node playerNode;
+    private static final BulletAppState bulletAppState =new BulletAppState();
+    private static Shargenerator Sg;
+    private static Node playerNode;
    
 
     @Override
     public void simpleInitApp() {
-        bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
         viewPort.setBackgroundColor(new ColorRGBA(0.7f, 0.8f, 1f, 1f));
         flyCam.setMoveSpeed(100);

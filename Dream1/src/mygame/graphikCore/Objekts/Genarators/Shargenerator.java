@@ -52,12 +52,7 @@ public class Shargenerator extends Node {
             x=xt;
             z=zt;
             System.err.print("Playerpos x= " + x + " z= " + z + "\n");
-            //Cross
            makeloop(x, z);
-            
-
-
-
         }
 
     }
@@ -80,13 +75,7 @@ public class Shargenerator extends Node {
         s.setName("shardNumber#" + " x= " + x + " z= " + z);
         if(!this.hasChild(s)){
         this.attachChild(s);
-
-        System.err.print("____________________________________________________\n");
-
-        System.err.print("make" + " x= " + x + " z= " + z + "\n");
-        s.fizzle();
-        //s.initPhysic();
-        
+        s.fizzle();      
         return s;
         }else{
         return null;
@@ -106,54 +95,38 @@ public class Shargenerator extends Node {
        Vect2DInt TempVec = new Vect2DInt();
 
         TempVec.set(pos.getX()-1, pos.getZ());
-        System.err.println("c" + World.containsKey(TempVec) + TempVec.toString() + "\n");
         if (World.containsKey(TempVec) && World.get(TempVec).getNorth() == null) {
-            System.err.print(TempVec + "\n");
             if (World.get(pos).getSouth() == null) {
                 World.get(TempVec).setNorth(World.get(pos), true);
-                System.err.print(true + "\n");
             } else {
                 World.get(TempVec).setNorth(World.get(pos), false);
-                System.err.print(false + "\n");
             }
         }
 
         TempVec.set(pos.getX() + 1, pos.getZ());
-        System.err.println("c" + World.containsKey(TempVec) + TempVec.toString() + "\n");
         if (World.containsKey(TempVec) && World.get(TempVec).getSouth() == null) {
-            System.err.print(TempVec + "\n");
             if (World.get(pos).getNorth() == null) {
                 World.get(TempVec).setSouth(World.get(pos), true);
-                System.err.print(true + "\n");
             } else {
                 World.get(TempVec).setSouth(World.get(pos), false);
-                System.err.print(false + "\n");
             }
         }
 
         TempVec.set(pos.getX(), pos.getZ() - 1);
-        System.err.println("c" + World.containsKey(TempVec) + TempVec.toString() + "\n");
         if (World.containsKey(TempVec) && World.get(TempVec).getEast() == null) {
-            System.err.print(TempVec + "\n");
             if (World.get(pos).getWest() == null) {
                 World.get(TempVec).setEast(World.get(pos), true);
-                System.err.print(true + "\n");
             } else {
                 World.get(TempVec).setEast(World.get(pos), false);
-                System.err.print(false + "\n");
             }
         }
 
         TempVec.set(pos.getX(), pos.getZ() + 1);
-        System.err.println("c" + World.containsKey(TempVec) + TempVec.toString() + "\n");
         if (World.containsKey(TempVec) && World.get(TempVec).getWest() == null) {
-            System.err.print(TempVec + "\n");
             if (World.get(pos).getEast() == null) {
                 World.get(TempVec).setWest(World.get(pos), true);
-                System.err.print(true + "\n");
             } else {
                 World.get(TempVec).setWest(World.get(pos), false);
-                System.err.print(false + "\n");
             }
         }
 

@@ -27,50 +27,54 @@ import mygame.graphikCore.Objekts.ShardContent.Shardenum;
  */
 public class Shard extends Node {
 
-    AssetManager assetManager;
-    BulletAppState bulletAppState;
-    HashMap<Shardenum, Shard> outer;
+    private static  AssetManager assetManager;
+    private static  BulletAppState bulletAppState;
+    private Shard North,South,West,East;
     Shardmesh shardbox;
-    float size;
+    private static float size=0;
     private RigidBodyControl collide;
-    float factor;
-    private final float height;
+    private static final float factor= 3;
+    private float height;
+    
 
     public Shard(AssetManager assetManager, BulletAppState bulletAppState, float size, float height) {
-        factor = 3;
         this.setName("shardNumber#");
-        outer = new HashMap<>(4);
-        this.assetManager = assetManager;
-        this.bulletAppState = bulletAppState;
-        this.size = size;
+        if(Shard.assetManager==null){
+        Shard.assetManager = assetManager;
+        }
+        if(Shard.bulletAppState==null){
+        Shard.bulletAppState = bulletAppState;
+        }
+        if(Shard.size==0){
+        Shard.size = size;
+        }
         this.height = height;
         shardbox = new Shardmesh(size, height, size);
         Geometry shardboxg = new Geometry("Shardbox", shardbox);
         shardboxg.setLocalTranslation(new Vector3f(0, -1, 0));
-        Material mat = new Material(this.assetManager,
+        Material mat = new Material(Shard.assetManager,
                 "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
         mat.setColor("Color", ColorRGBA.Blue);
 
-        Material sphereMat = new Material(this.assetManager,
+        Material sphereMat = new Material(Shard.assetManager,
                 "Common/MatDefs/Light/Lighting.j3md");
         sphereMat.setTexture("DiffuseMap",
-                this.assetManager.loadTexture("UTextures/Pondx128.tga"));
+                Shard.assetManager.loadTexture("UTextures/Pondx128.tga"));
         sphereMat.setTexture("NormalMap",
-                this.assetManager.loadTexture("UTextures/Pond_normalx128.tga"));
+                Shard.assetManager.loadTexture("UTextures/Pond_normalx128.tga"));
         sphereMat.setBoolean("UseMaterialColors", true);
         sphereMat.setColor("Diffuse", ColorRGBA.White);
         sphereMat.setColor("Specular", ColorRGBA.White);
         sphereMat.setColor("Ambient", ColorRGBA.White);
 
         sphereMat.setFloat("Shininess", 128f);  // [0,128]
-        Material nMat = new Material(this.assetManager,
+        Material nMat = new Material(Shard.assetManager,
                 "Common/MatDefs/Misc/ShowNormals.j3md");
         shardboxg.setMaterial(sphereMat);
         //shardboxg.setMaterial(nMat);
         TangentBinormalGenerator.generate(shardboxg);
         shardboxg.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         this.attachChild(shardboxg);
-        this.initPhysic();
         this.setCullHint(CullHint.Dynamic);
         
         
@@ -213,10 +217,10 @@ public class Shard extends Node {
     }
 
     public void setNorth(Shard North, boolean fit) {
-        outer.put(Shardenum.North, North);
+        //outer.put(Shardenum.North, North);
+        this.North=North;
         if (fit) {
             North.setLocalTranslation(this.getLocalTranslation().getX() + size, North.getLocalTranslation().getY(), this.getLocalTranslation().getZ());
-            North.getControl(RigidBodyControl.class).setPhysicsLocation(North.getLocalTranslation());
             North.setLeftDown(this.getLeftUp());
             North.setRightDown(this.getRightUp());
         }
@@ -232,10 +236,10 @@ public class Shard extends Node {
     }
 
     public void setSouth(Shard South, boolean fit) {
-        outer.put(Shardenum.South, South);
+        //outer.put(Shardenum.South, South);
+        this.South=South;
         if (fit) {
             South.setLocalTranslation(this.getLocalTranslation().getX() - size, South.getLocalTranslation().getY(), this.getLocalTranslation().getZ());
-            South.getControl(RigidBodyControl.class).setPhysicsLocation(South.getLocalTranslation());
             South.setLeftUp(this.getLeftDown());
             South.setRightUp(this.getRightDown());
         }
@@ -252,11 +256,10 @@ public class Shard extends Node {
     }
 
     public void setEast(Shard East, boolean fit) {
-        outer.put(Shardenum.East, East);
+        //outer.put(Shardenum.East, East);
+        this.East=East;
         if (fit) {
             East.setLocalTranslation(this.getLocalTranslation().getX(), East.getLocalTranslation().getY(), this.getLocalTranslation().getZ() + size);
-            East.getControl(RigidBodyControl.class).setPhysicsLocation(East.getLocalTranslation());
-
             East.setLeftUp(this.getRightUp());
             East.setLeftDown(this.getRightDown());
         }
@@ -273,10 +276,10 @@ public class Shard extends Node {
     }
 
     public void setWest(Shard West, boolean fit) {
-        outer.put(Shardenum.West, West);
+        //outer.put(Shardenum.West, West);
+        this.West=West;
         if (fit) {
             West.setLocalTranslation(this.getLocalTranslation().getX(), West.getLocalTranslation().getY(), this.getLocalTranslation().getZ() - size);
-            West.getControl(RigidBodyControl.class).setPhysicsLocation(West.getLocalTranslation());
             West.setRightUp(this.getLeftUp());
             West.setRightDown(this.getLeftDown());
         }
@@ -293,8 +296,8 @@ public class Shard extends Node {
     }
 
     public Shard getNorth() {
-        if (outer.containsKey(Shardenum.North)) {
-            return outer.get(Shardenum.North);
+        if (North!=null) {
+            return North;
         } else {
             return null;
         }
@@ -303,8 +306,8 @@ public class Shard extends Node {
     }
 
     public Shard getSouth() {
-        if (outer.containsKey(Shardenum.South)) {
-            return outer.get(Shardenum.South);
+        if (South!=null) {
+            return South;
         } else {
             return null;
         }
@@ -312,8 +315,8 @@ public class Shard extends Node {
     }
 
     public Shard getEast() {
-        if (outer.containsKey(Shardenum.East)) {
-            return outer.get(Shardenum.East);
+        if (East!=null) {
+            return East;
         } else {
             return null;
         }
@@ -321,8 +324,8 @@ public class Shard extends Node {
     }
 
     public Shard getWest() {
-        if (outer.containsKey(Shardenum.West)) {
-            return outer.get(Shardenum.West);
+        if (West!=null) {
+            return West;
         } else {
             return null;
         }
@@ -332,17 +335,13 @@ public class Shard extends Node {
     public void endclean() {
         this.getNorth().setLeftDown(this.getLeftUp());
         this.getNorth().setRightDown(this.getRightUp());
-        this.getNorth().updatePhysic();
         this.getSouth().setLeftUp(this.getLeftDown());
         this.getSouth().setRightUp(this.getRightDown());
-        this.getSouth().updatePhysic();
         this.getEast().setLeftUp(this.getRightUp());
         this.getEast().setLeftDown(this.getRightDown());
-        this.getEast().updatePhysic();
         this.getWest().setRightUp(this.getLeftUp());
         this.getWest().setRightDown(this.getLeftDown());
-        this.getWest().updatePhysic();
-        this.updatePhysic();
+        this.initPhysic();
         
         //testchild
         //GTAPObjectFactory GF=new GTAPObjectFactory(assetManager, bulletAppState);
