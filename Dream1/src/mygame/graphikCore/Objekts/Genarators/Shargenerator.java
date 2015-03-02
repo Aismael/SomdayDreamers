@@ -51,7 +51,7 @@ public class Shargenerator extends Node {
         if ((xt != x || zt != z)&&init) {
             x=xt;
             z=zt;
-            System.err.print("Playerpos x= " + x + " z= " + z + "\n");
+            //System.err.print("Playerpos x= " + x + " z= " + z + "\n");
            makeloop(x, z);
         }
 
