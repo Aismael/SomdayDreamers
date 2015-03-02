@@ -6,7 +6,6 @@ package mygame.graphikCore.Objekts;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.collision.shapes.SimplexCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.material.Material;
@@ -16,10 +15,7 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.util.TangentBinormalGenerator;
-import java.util.HashMap;
-import mygame.graphikCore.GTAPObject;
-import mygame.graphikCore.GTAPObjectFactory;
-import mygame.graphikCore.Objekts.ShardContent.Shardenum;
+import mygame.graphikCore.Objekts.Genarators.MaterialGenerator;
 
 /**
  *
@@ -29,6 +25,7 @@ public class Shard extends Node {
 
     private static  AssetManager assetManager;
     private static  BulletAppState bulletAppState;
+    private static MaterialGenerator materialGenerator;
     private Shard North,South,West,East;
     Shardmesh shardbox;
     private static float size=0;
@@ -45,32 +42,18 @@ public class Shard extends Node {
         if(Shard.bulletAppState==null){
         Shard.bulletAppState = bulletAppState;
         }
+        if(Shard.materialGenerator==null){
+        Shard.materialGenerator = new MaterialGenerator(assetManager);
+        }
         if(Shard.size==0){
         Shard.size = size;
         }
+        
         this.height = height;
         shardbox = new Shardmesh(size, height, size);
         Geometry shardboxg = new Geometry("Shardbox", shardbox);
-        shardboxg.setLocalTranslation(new Vector3f(0, -1, 0));
-        Material mat = new Material(Shard.assetManager,
-                "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
-        mat.setColor("Color", ColorRGBA.Blue);
-
-        Material sphereMat = new Material(Shard.assetManager,
-                "Common/MatDefs/Light/Lighting.j3md");
-        sphereMat.setTexture("DiffuseMap",
-                Shard.assetManager.loadTexture("UTextures/Pondx128.tga"));
-        sphereMat.setTexture("NormalMap",
-                Shard.assetManager.loadTexture("UTextures/Pond_normalx128.tga"));
-        sphereMat.setBoolean("UseMaterialColors", true);
-        sphereMat.setColor("Diffuse", ColorRGBA.White);
-        sphereMat.setColor("Specular", ColorRGBA.White);
-        sphereMat.setColor("Ambient", ColorRGBA.White);
-
-        sphereMat.setFloat("Shininess", 128f);  // [0,128]
-        Material nMat = new Material(Shard.assetManager,
-                "Common/MatDefs/Misc/ShowNormals.j3md");
-        shardboxg.setMaterial(sphereMat);
+        shardboxg.setLocalTranslation(new Vector3f(0, -1, 0));  
+        shardboxg.setMaterial(Shard.materialGenerator.getMaterial(MaterialGenerator.Materialname.pondx128));
         //shardboxg.setMaterial(nMat);
         TangentBinormalGenerator.generate(shardboxg);
         shardboxg.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
