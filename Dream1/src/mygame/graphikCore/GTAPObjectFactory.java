@@ -14,6 +14,7 @@ import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.util.TangentBinormalGenerator;
 
@@ -75,7 +76,8 @@ public class GTAPObjectFactory {
         return material;
     }
 
-    public Spatial makeModel(GTAPObject GTAPO) {
+    public Node makeModel(GTAPObject GTAPO) {
+        Node physnode=new Node();
         this.GTAPO = GTAPO;
         spatial = assetManager.loadModel(GTAPO.getModelpath());
         
@@ -86,20 +88,23 @@ public class GTAPObjectFactory {
         spatial.setMaterial(makeMat());
         TangentBinormalGenerator.generate(spatial);
         spatial.setShadowMode(GTAPO.getShadowmode());
-        spatial.setLocalTranslation(trans);
-        spatial.setLocalScale(scale);
-        
-        initPhys();
+        physnode.setLocalTranslation(trans);
+        physnode.setLocalScale(scale);
+                spatial.center();
 
-        return spatial;
+        //initPhys();
+        physnode.attachChild(spatial);
+        initPhys();
+        return physnode;
     }
 
     private void initPhys() {
-        CollisionShape cs = CollisionShapeFactory.createDynamicMeshShape(spatial);
+        CollisionShape cs = CollisionShapeFactory.createDynamicMeshShape(spatial.getParent());
         RigidBodyControl RBC = new RigidBodyControl(cs, weight);
-        spatial.addControl(RBC);
+        spatial.getParent().addControl(RBC);
         RBC.setGravity(localGravity);
         bulletAppState.getPhysicsSpace().add(RBC);
+        bulletAppState.setDebugEnabled(true);
     }
 
     public void setLocalGravity(Vector3f localGravity) {

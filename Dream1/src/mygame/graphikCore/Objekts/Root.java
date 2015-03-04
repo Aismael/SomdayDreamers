@@ -39,7 +39,7 @@ public class Root extends Node {
         GF.setShine(128f);
         
         GF.setWeight(10f);
-        GF.setTrans(new Vector3f(4, 0.1f, 2));
+        GF.setTrans(new Vector3f(2, 1.05f, 4));
         this.attachChild(GF.makeModel(new GTAPObject("Fullmodels/Boxes/Barrel/big_diffus.tga", 
                 "Fullmodels/Boxes/Barrel/big_normal.tga", 
                 "Fullmodels/Boxes/Barrel/big_specular.tga", 
@@ -53,7 +53,7 @@ public class Root extends Node {
                 "Fullmodels/Boxes/Barrel/mini_specular.tga", 
                 "Fullmodels/Boxes/Barrel/mini_wood_barrel.j3o")));
         
-        GF.setTrans(new Vector3f(2, 0.3f, 0));
+        GF.setTrans(new Vector3f(2, 4f, 0));
         GF.setWeight(50f);
 
         //this.attachChild(GF.makeModel(new GTAPObject("Fullmodels/Rocks/7/diffuse.tga", 
@@ -61,7 +61,7 @@ public class Root extends Node {
           //      "Fullmodels/Rocks/7/specular.tga", 
            //     "Fullmodels/Rocks/7/rocks_03.j3o")));
         
-        GF.setTrans(new Vector3f(8, 0.1f, 0));
+        GF.setTrans(new Vector3f(8, 3f, 0));
         GF.setWeight(0f);
         GF.setScale(1f);
                 GF.setShine(0f);

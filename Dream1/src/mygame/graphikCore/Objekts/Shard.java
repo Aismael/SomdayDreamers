@@ -160,9 +160,9 @@ public class Shard extends Node {
         float x = (float) Math.random();
         float y = (float) Math.random();
         if (x >= 0.5f) {
-            return y;
+            return 0;
         } else {
-            return -y;
+            return -0;
         }
 
     }
