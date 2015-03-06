@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mygame.graphikCore.Objekts;
+package mygame.graphikCore.Objekts.ShardContent;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
@@ -160,9 +160,9 @@ public class Shard extends Node {
         float x = (float) Math.random();
         float y = (float) Math.random();
         if (x >= 0.5f) {
-            return 0;
+            return y;
         } else {
-            return -0;
+            return -y;
         }
 
     }

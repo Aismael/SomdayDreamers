@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mygame.graphikCore.Objekts;
+package mygame.graphikCore.Objekts.ShardContent;
 
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;

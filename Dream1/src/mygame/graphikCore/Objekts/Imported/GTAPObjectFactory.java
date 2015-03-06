@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mygame.graphikCore;
+package mygame.graphikCore.Objekts.Imported;
 
+import mygame.graphikCore.Objekts.Imported.GTAPObject;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CollisionShape;

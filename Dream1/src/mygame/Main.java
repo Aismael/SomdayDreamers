@@ -20,7 +20,7 @@ import mygame.gamplayCore.GameCharacterControl;
 import mygame.gamplayCore.InputAppState;
 import mygame.graphikCore.Objekts.Root;
 import mygame.graphikCore.Objekts.Genarators.Shargenerator;
-import mygame.graphikCore.configInitializer;
+import mygame.gamplayCore.configInitializer;
 
 /**
  * test

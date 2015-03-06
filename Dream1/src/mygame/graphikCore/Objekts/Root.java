@@ -18,8 +18,8 @@ import com.jme3.scene.Node;
 import com.jme3.scene.VertexBuffer;
 import com.jme3.scene.shape.Box;
 import com.jme3.util.TangentBinormalGenerator;
-import mygame.graphikCore.GTAPObject;
-import mygame.graphikCore.GTAPObjectFactory;
+import mygame.graphikCore.Objekts.Imported.GTAPObject;
+import mygame.graphikCore.Objekts.Imported.GTAPObjectFactory;
 
 /**
  *

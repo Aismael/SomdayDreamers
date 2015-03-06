@@ -9,7 +9,7 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import java.util.HashMap;
-import mygame.graphikCore.Objekts.Shard;
+import mygame.graphikCore.Objekts.ShardContent.Shard;
 
 /**
  *
