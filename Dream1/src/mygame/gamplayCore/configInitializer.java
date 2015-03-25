@@ -26,7 +26,8 @@ public class configInitializer {
     String title="Dream1";
     public configInitializer(){
         settings= new AppSettings(true);
-        settings.setIcons(this.getIcons("Assets/Interface/Icons/","icon","png"));
+        
+        settings.setIcons(this.getIcons("assets/Interface/Icons/","icon","png"));
         try {
             settings.load("settings.pref");
         } catch (BackingStoreException ex) {
@@ -79,6 +80,6 @@ public class configInitializer {
             settings.setFrequency(modes[modes.length-1].getRefreshRate());
             settings.setBitsPerPixel(32);
             settings.setFullscreen(device.isFullScreenSupported());
-            settings.setRenderer(AppSettings.LWJGL_OPENGL3);
+            settings.setRenderer(AppSettings.LWJGL_OPENGL_ANY);
     }
 }

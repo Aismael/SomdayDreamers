@@ -82,7 +82,7 @@ public class Root extends Node {
                 "Fullmodels/Plants/Palm/2/normal.tga", 
                 "Fullmodels/Plants/Palm/2/specular.tga", 
                 "Fullmodels/Plants/Palm/2/palm_straight.j3o");
-        y.setShadowmode(shadowMode.Cast);
+        y.setShadowmode(RenderQueue.ShadowMode.Cast);
         y.setTranslucentpath("Fullmodels/Plants/Palm/2/translucency3.tga");
         this.attachChild(GF.makeModel(y));
         
@@ -110,7 +110,7 @@ public class Root extends Node {
         sphereMat.setFloat("Shininess", 128f);  // [0,128]
         shardboxg.setMaterial(sphereMat);
         nMat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
-        shardboxg.setCullHint(cullHint.Never);
+        shardboxg.setCullHint(CullHint.Never);
         //shardboxg.setMaterial(nMat);
 
 

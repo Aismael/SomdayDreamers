@@ -70,6 +70,7 @@ public class Main extends SimpleApplication {
         //TODO Sg.shardload Later set in config
         rootNode.attachChild(Sg);
         rootNode.attachChild(playerNode);
+        //bulletAppState.setDebugEnabled(true);
         
 
 

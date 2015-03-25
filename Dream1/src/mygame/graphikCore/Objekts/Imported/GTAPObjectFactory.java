@@ -105,7 +105,7 @@ public class GTAPObjectFactory {
         spatial.getParent().addControl(RBC);
         RBC.setGravity(localGravity);
         bulletAppState.getPhysicsSpace().add(RBC);
-        bulletAppState.setDebugEnabled(true);
+        
     }
 
     public void setLocalGravity(Vector3f localGravity) {
